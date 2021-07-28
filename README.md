@@ -9,6 +9,6 @@ as a good refference how to make arduino lib:
 https://playground.arduino.cc/Code/Library/
 
 ## Description
-Simple and minimal implementation of various sensors to be used within the Node software for ESP32
+Simple and minimal implementation of various hardware devices that can only *READ* certain values from the real world to be used within the Node software for ESP32
 
 
