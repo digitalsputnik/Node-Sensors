@@ -6,11 +6,6 @@
 #include "../SensorTypes.h"
 #include "../NodeSensors.h"
 
-//CSensorManager sensors;
-//sensors.attach<CLM75TemperatureSensor>(STwoWireAddress);
-//sensors.
-
-
 CNodeSensors sensors;
 
 void setup()
@@ -18,6 +13,7 @@ void setup()
     Serial.begin(115200);
     Serial.println("Hello LM75Test");
 
+    //Create LM75 temperature sensor with ID 0 at address SDA: 4, SCL: 21, i2c address 0x49
     sensors.attach<CLM75TemperatureSensor>(0, STwoWireAddress{4, 21, 100000, 0x49});
 }
 
@@ -32,18 +28,14 @@ void loop()
     {
         Serial.println("Updating sensors");
 
-        sensors.update();
+        sensors.update(); // Update all sensors
 
         Serial.printf("Sensors updated in: %ims\n", (millis() - start));
 
-        auto readState = sensors.readSensor(0); // User must know how to interpret given unique ID. What Union member has proper data.
-        //Idea: Create compile time generated Unique ID that is accessible via CLM75Sensor::uniqueID - Type is 100% clear what user wants to access.
-        //With given interface, sensorState can always be interpreter correctly according to type. Interpretation layer can be added via CLM75Sensor::Interpret(sensorState) -> Float[4]&
-        //Currently use must access proper Union from and integer value. When Union and other sensor types are added.
-        //What if multiple same type sensors ?
+        const auto& readState = sensors.readSensor(0); // Read state of sensor with id 0
 
-
-        Serial.printf("Sensor '%s' state: %f, %f, %f, %f @ %i\n", readState.sensorName.c_str(), readState.temperatureCensius[0], readState.temperatureCensius[1], readState.temperatureCensius[2], readState.temperatureCensius[3], readState.timestamp);
+        //Display sensor state, interpreted as temperatureCelsius
+        Serial.printf("Sensor '%s' state: %f, %f, %f, %f @ %i\n", readState.sensorName.c_str(), readState.temperatureCelsius[0], readState.temperatureCelsius[1], readState.temperatureCelsius[2], readState.temperatureCelsius[3], readState.timestamp);
 
         lastRefreshTime += REFRESH_INTERVAL;
     }

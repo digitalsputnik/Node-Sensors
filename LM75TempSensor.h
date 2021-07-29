@@ -52,9 +52,9 @@ public:
         float val = m_Thermo->readTemperatureC();
 
         m_SensorState.timestamp = millis();
-        m_SensorState.temperatureCensius[0] = val;
-        m_SensorState.temperatureCensius[1] = 0;
-        m_SensorState.temperatureCensius[2] = 0;
-        m_SensorState.temperatureCensius[3] = 0;
+        m_SensorState.temperatureCelsius[0] = val;
+        m_SensorState.temperatureCelsius[1] = 0;
+        m_SensorState.temperatureCelsius[2] = 0;
+        m_SensorState.temperatureCelsius[3] = 0;
     }
 };

@@ -18,6 +18,6 @@ struct SSensorState
     union
     {
         float data[4];
-        float temperatureCensius[4];
+        float temperatureCelsius[4];
     };
 };
