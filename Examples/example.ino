@@ -13,14 +13,12 @@ void setup()
     Serial.begin(115200);
     Serial.println("Hello LM75Test");
 
-    //Create LM75 temperature sensor with ID 0 at address SDA: 4, SCL: 21, i2c address 0x49
+    //Create LM75 temperature sensor with ID 0 at address i2c @ pins: (SDA: 4, SCL: 21), i2c address: 0x49 @ frequency freq.
     sensors.attach<CLM75TemperatureSensor>(0, STwoWireAddress{4, 21, 100000, 0x49});
 }
 
 static const uint64_t REFRESH_INTERVAL = 1000; // ms
 static uint64_t lastRefreshTime = 0;
-
-
 void loop()
 {
     auto start = millis();

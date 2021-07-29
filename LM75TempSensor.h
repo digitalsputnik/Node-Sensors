@@ -14,10 +14,10 @@ struct STwoWireAddress
 {
     int SDA = 4;
     int SCL = 21;
-    int speed = 100000;
+    int frequency = 100000;
     int i2cAddress = 0x49;    
 
-    STwoWireAddress(int sda, int scl, int speed, int i2cA): SDA(sda), SCL(scl), speed(speed), i2cAddress(i2cA){}    
+    STwoWireAddress(int sda, int scl, int frequency, int i2cA): SDA(sda), SCL(scl), frequency(frequency), i2cAddress(i2cA){}    
 };
 
 class CLM75TemperatureSensor: public CAbstractSensor
@@ -33,7 +33,7 @@ public:
         :   CAbstractSensor(uniqueID),
             m_I2CTemp(1)
     {
-        m_I2CTemp.begin(twoWireAddress.SDA, twoWireAddress.SCL, twoWireAddress.speed);
+        m_I2CTemp.begin(twoWireAddress.SDA, twoWireAddress.SCL, twoWireAddress.frequency);
         m_Thermo = new Generic_LM75(&m_I2CTemp, twoWireAddress.i2cAddress);
         
         m_SensorState.sensorName = "LM75";
