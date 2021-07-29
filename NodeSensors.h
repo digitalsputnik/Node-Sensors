@@ -7,7 +7,6 @@
 #include "AbsSensor.h"
 #include "SensorState.h"
 
-
 namespace std
 {
     template<typename T, typename... Args>

@@ -1,8 +1,6 @@
 #pragma once
-
 #include <memory>
 #include <time.h>
-
 
 #include <Wire.h>
 #include <Temperature_LM75_Derived.h>

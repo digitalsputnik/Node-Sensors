@@ -1,10 +1,7 @@
 #include <Arduino.h>
-#include <Wire.h>
-#include <memory>
 
-#include "../LM75TempSensor.h"
-#include "../SensorTypes.h"
 #include "../NodeSensors.h"
+#include "../LM75TempSensor.h"
 
 CNodeSensors sensors;
 
