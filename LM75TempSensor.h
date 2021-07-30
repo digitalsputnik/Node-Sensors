@@ -8,51 +8,20 @@
 #include "SensorTypes.h"
 #include "AbsSensor.h"
 
-struct STwoWireAddress
-{
-    int SDA = 4;
-    int SCL = 21;
-    int frequency = 100000;
-    int i2cAddress = 0x49;    
-
-    STwoWireAddress(int sda, int scl, int frequency, int i2cA): SDA(sda), SCL(scl), frequency(frequency), i2cAddress(i2cA){}    
-};
-
 class CLM75TemperatureSensor: public CAbstractSensor
 {
 public:
 static constexpr eSensorType TYPE = eSensorType::I2C;
 
 private:
-    TwoWire m_I2CTemp; // Need to scan if 1 or 2
-    Generic_LM75* m_Thermo; // Owned pointer, deleted on object destruction
+    TwoWire* m_I2C = nullptr; // Non owning pointer to TwoWire instance
+    Generic_LM75 m_Thermo;
 public:
-    CLM75TemperatureSensor(int uniqueID, STwoWireAddress twoWireAddress)
-        :   CAbstractSensor(uniqueID),
-            m_I2CTemp(1)
-    {
-        m_I2CTemp.begin(twoWireAddress.SDA, twoWireAddress.SCL, twoWireAddress.frequency);
-        m_Thermo = new Generic_LM75(&m_I2CTemp, twoWireAddress.i2cAddress);
-        
-        m_SensorState.sensorName = "LM75";
-        m_SensorState.sensorType = TYPE;
-        m_SensorState.sensorVersion = 1.0;
-    }
+    CLM75TemperatureSensor(int uniqueID, TwoWire* twoWire, int i2cAddress);
 
-    ~CLM75TemperatureSensor()
-    {
-        delete m_Thermo;
-    }
+    virtual ~CLM75TemperatureSensor();
 
-    virtual void update() override
-    {   
-        
-        float val = m_Thermo->readTemperatureC();
-
-        m_SensorState.timestamp = millis();
-        m_SensorState.temperatureCelsius[0] = val;
-        m_SensorState.temperatureCelsius[1] = 0;
-        m_SensorState.temperatureCelsius[2] = 0;
-        m_SensorState.temperatureCelsius[3] = 0;
-    }
+    virtual void update() override;
 };
+
+#include "LM75TempSensor.cpp" // TODO: Remove on commit
