@@ -43,5 +43,3 @@ void CNodeSensors::attach(TParams&&... params)
     auto newSensor = std::make_unique<T>(std::forward<TParams>(params)...);
     m_Sensors.emplace_back(std::move(newSensor));
 }
-
-#include "NodeSensors.cpp"// TODO: Remove on commit

@@ -1,11 +1,7 @@
 #include <Arduino.h>
 
-//#include <NodeSensors.h>
-//#include <LM75TempSensor.h>
-//TODO: Change without ../.. on commit | Also remove #include ".cpp" at the end of .h files
-//Those were required for, using platformio, compiler to see member definitions.
-#include "../../NodeSensors.h"
-#include "../../LM75TempSensor.h"
+#include <NodeSensors.h>
+#include <LM75TempSensor.h>
 
 enum EI2CAddresses
 {
@@ -49,9 +45,8 @@ void loop()
 
         Serial.printf("Sensors updated in: %ims\n", (millis() - start));
 
-        //Print all sensors
-        for(int i = 0; i < sensors.size(); i++)
         {
+            int i = 0;
             const auto& readState = sensors.readSensor(i); // Read state of sensor with id 0
             //Display sensor state, interpreted as temperatureCelsius
             Serial.printf("Sensor(%i) '%s' state: %f, %f, %f, %f @ %i\n", i, readState.sensorName.c_str(), readState.temperatureCelsius[0], readState.temperatureCelsius[1], readState.temperatureCelsius[2], readState.temperatureCelsius[3], readState.timestamp);

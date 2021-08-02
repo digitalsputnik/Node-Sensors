@@ -23,5 +23,3 @@ public:
 
     virtual void update() override;
 };
-
-#include "LM75TempSensor.cpp" // TODO: Remove on commit
